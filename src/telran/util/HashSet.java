@@ -115,7 +115,8 @@ HashSet<T> tmpSet = new HashSet<>(hashTable.length*2);
 
 		@Override
 		public boolean hasNext() {
-		return currentIndex < arrIterators.length;
+		return currentIndex < arrIterators.length
+				&& arrIterators[currentIndex].hasNext();
 		}
 
 		@Override
