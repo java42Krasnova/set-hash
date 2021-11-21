@@ -142,7 +142,6 @@ HashSet<T> tmpSet = new HashSet<>(hashTable.length*2);
 
 		@Override
 		public void remove() {
-			
 			arrIterators[indPrevIterator].remove();
 			size--;
 		}
