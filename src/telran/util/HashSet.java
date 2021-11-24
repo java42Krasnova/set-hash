@@ -86,7 +86,7 @@ HashSet<T> tmpSet = new HashSet<>(hashTable.length*2);
 	private class HashSetIterator<T> implements Iterator<T>
 	{
 		Iterator<T> arrIterators[];
-		int currentIndex =0 ;
+		int currentIndex = 0 ;
 		int indPrevIterator;
 		
 		public HashSetIterator() {
@@ -100,13 +100,14 @@ HashSet<T> tmpSet = new HashSet<>(hashTable.length*2);
 			arrIterators = new Iterator[hashTable.length];
 			for(int i=0; i < hashTable.length; i++) {
 				if(hashTable[i]!= null) {
-				arrIterators[i] = (Iterator<T>) hashTable[i].iterator(); 
+					
+				arrIterators[i] = (Iterator<T>) hashTable[i].iterator();
 				}	
 		}
 		}
 		private void getStartPointIterator() {
 			for(int ind=0; ind < arrIterators.length; ind++) {
-					if(arrIterators[ind] != null) {
+					if(arrIterators[ind] != null ) {
 						currentIndex= ind;
 						break;
 				}
@@ -115,27 +116,24 @@ HashSet<T> tmpSet = new HashSet<>(hashTable.length*2);
 
 		@Override
 		public boolean hasNext() {
-		return currentIndex < arrIterators.length
-				&& arrIterators[currentIndex].hasNext();
+		return currentIndex < arrIterators.length && arrIterators[currentIndex].hasNext();
 		}
 
 		@Override
 		public T next() {
-			if(!arrIterators[currentIndex].hasNext()) {
-				getNextNoNullIterator();
-			}
+			
 			T res = arrIterators[currentIndex].next();
 			indPrevIterator = currentIndex;
-				getNextNoNullIterator();
+				findNextllIterator();
 
 			return res;
 		}
-		private void getNextNoNullIterator() {
+		private void findNextllIterator() {
 		if(	!arrIterators[currentIndex].hasNext()) {
-			while(currentIndex < arrIterators.length && 
+			while(++currentIndex < arrIterators.length && 
 			(arrIterators[currentIndex]==null||
 					!arrIterators[currentIndex].hasNext())){
-				currentIndex++;
+				//currentIndex++;
 			}
 		}
 		}
