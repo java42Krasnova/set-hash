@@ -2,6 +2,7 @@ package telran.util;
 
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.NoSuchElementException;
 
 public class HashSet<T> extends AbstractSet<T> {
 	private static final int DEFAULT_ARRAYLENGTH = 16;
@@ -88,11 +89,10 @@ HashSet<T> tmpSet = new HashSet<>(hashTable.length*2);
 		Iterator<T> arrIterators[];
 		int currentIndex = -1 ;
 		int indPrevIterator;
+		boolean isWasNext = false;
 		
 		public HashSetIterator() {
 			 fillIteratorsArray();
-			 //getStartPointIterator();
-			
 		}
 		
 		@SuppressWarnings("unchecked")
@@ -107,14 +107,6 @@ HashSet<T> tmpSet = new HashSet<>(hashTable.length*2);
 				}
 		}
 		}
-//		private void getStartPointIterator() {
-//			for(int ind=0; ind < arrIterators.length; ind++) {
-//					if(arrIterators[ind] != null ) {
-//						currentIndex= ind;
-//						break;
-//				}
-//			}
-//		}
 
 		@Override
 		public boolean hasNext() {
@@ -122,14 +114,17 @@ HashSet<T> tmpSet = new HashSet<>(hashTable.length*2);
 		}
 
 		@Override
-		public T next() {
-			
+		public T next() {//TODO done
+			if(!hasNext()) {
+				throw new NoSuchElementException();
+			}
 			T res = arrIterators[currentIndex].next();
 			indPrevIterator = currentIndex;
-				findNextllIterator();
-
+			findNextllIterator();
+			isWasNext = true;
 			return res;
 		}
+		
 		private void findNextllIterator() {
 		if(	!arrIterators[currentIndex].hasNext()) {
 			while(++currentIndex < arrIterators.length && 
@@ -140,8 +135,12 @@ HashSet<T> tmpSet = new HashSet<>(hashTable.length*2);
 		}
 
 		@Override
-		public void remove() {
+		public void remove() {//TODO done
+			if(!isWasNext) {
+				throw new IllegalStateException();
+			}
 			arrIterators[indPrevIterator].remove();
+			isWasNext = false;
 			size--;
 		}
 	}
