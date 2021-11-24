@@ -86,12 +86,12 @@ HashSet<T> tmpSet = new HashSet<>(hashTable.length*2);
 	private class HashSetIterator<T> implements Iterator<T>
 	{
 		Iterator<T> arrIterators[];
-		int currentIndex = 0 ;
+		int currentIndex = -1 ;
 		int indPrevIterator;
 		
 		public HashSetIterator() {
 			 fillIteratorsArray();
-			 getStartPointIterator();
+			 //getStartPointIterator();
 			
 		}
 		
@@ -100,19 +100,21 @@ HashSet<T> tmpSet = new HashSet<>(hashTable.length*2);
 			arrIterators = new Iterator[hashTable.length];
 			for(int i=0; i < hashTable.length; i++) {
 				if(hashTable[i]!= null) {
-					
 				arrIterators[i] = (Iterator<T>) hashTable[i].iterator();
+				if(currentIndex<0) { 
+					currentIndex = i;
 				}	
-		}
-		}
-		private void getStartPointIterator() {
-			for(int ind=0; ind < arrIterators.length; ind++) {
-					if(arrIterators[ind] != null ) {
-						currentIndex= ind;
-						break;
 				}
-			}
 		}
+		}
+//		private void getStartPointIterator() {
+//			for(int ind=0; ind < arrIterators.length; ind++) {
+//					if(arrIterators[ind] != null ) {
+//						currentIndex= ind;
+//						break;
+//				}
+//			}
+//		}
 
 		@Override
 		public boolean hasNext() {
@@ -133,7 +135,6 @@ HashSet<T> tmpSet = new HashSet<>(hashTable.length*2);
 			while(++currentIndex < arrIterators.length && 
 			(arrIterators[currentIndex]==null||
 					!arrIterators[currentIndex].hasNext())){
-				//currentIndex++;
 			}
 		}
 		}
