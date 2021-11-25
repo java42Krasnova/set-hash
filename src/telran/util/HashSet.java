@@ -89,6 +89,9 @@ HashSet<T> tmpSet = new HashSet<>(hashTable.length*2);
 		Iterator<T> arrIterators[];
 		int currentIndex = -1 ;
 		int indPrevIterator;
+		/* V.R.
+		 * It is possible to use indPrevIterator instead of isWasNext.
+		 */
 		boolean isWasNext = false;
 		
 		public HashSetIterator() {
@@ -115,6 +118,11 @@ HashSet<T> tmpSet = new HashSet<>(hashTable.length*2);
 
 		@Override
 		public T next() {//TODO done
+			/* V.R.
+			 * Why call a function if it is possible don't call
+			 * if(currentIndex >= arrIterators.length || !arrIterators[currentIndex].hasNext())
+			 * does the same, but it is simpler
+			 */
 			if(!hasNext()) {
 				throw new NoSuchElementException();
 			}
